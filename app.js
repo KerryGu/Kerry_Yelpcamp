@@ -4,7 +4,7 @@ const path = require('path')
 const mongoose = require('mongoose')
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate'); //boilerplate 相关（app.engine 相关)
-const ExpressError = require("./utils/catchAsync.js");
+const ExpressError = require('./utils/ExpressError');
 const User = require("./models/user")
 const campgroundRoutes = require('./routes/campgrounds.js');
 const reviewsRoutes = require("./routes/reviews.js");
@@ -74,7 +74,6 @@ app.use("/campgrounds/:id/reviews", reviewsRoutes);
 app.use('/', usersRoutes);
 
 app.get("/", (req, res) => { res.render('home') })
-
 
 
 app.all(/(.*)/, (req, res, next) => {
