@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate')%>
 
-//form reference from bootstrap 
+<%//form reference from bootstrap %>
 
 <div class="row">
 
@@ -9,8 +9,8 @@
         <form action="/campgrounds" method="POST" novalidate class="validated-form">
             <div class = "mb-3">
                 <label class = "form label" for="title">Title</label>
-                <input class = "form control" type="text" id="title" name="campground[title]" requried> // campground[title]: everything in the request.body would be stored under capground
-                                                                        // value set as the title attribute  
+                <input class = "form control" type="text" id="title" name="campground[title]" requried> <%// campground[title]: everything in the request.body would be stored under capground
+                                                                        ///value set as the title attribute %>
                  <div class="valid-feedback">
                 Looks good!
                  </div>

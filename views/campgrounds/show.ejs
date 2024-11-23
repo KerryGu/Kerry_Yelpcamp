@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate')%>
 
-// 用div是因为要用boostrap 的grid system
+<%// 用div是因为要用boostrap 的grid system %>
 <div class="row">
 
     <div class="col-6">
@@ -26,7 +26,7 @@
           </div>
          
     </div>
-    <div class="col-6"> // put review in another column , after the 1st column class!
+    <div class="col-6"> <%// put review in another column , after the 1st column class! %>
         <h2> Leave a Review</h2>
         <form action="/campgrounds/<%=campground._id%>/reviews" method = "POST" class = "mb-3 validated-form" novalidate>
           <div class = "mb-3">

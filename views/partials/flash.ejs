@@ -1,17 +1,17 @@
 
-// check if success is not empty and has a length ( length = 0 is falsy), success itself is an array
+<%// check if success is not empty and has a length ( length = 0 is falsy), success itself is an array%>
 <% if(success && success.length) {%>
-<div class="alert alter-success alert-dismissible fade show" role = "alert"> //role for accessibility purpose
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <%= success %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
 
-    <%= success%>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-</div>
- <%}%>
+<%}%>
 
  <% if(error && error.length) {%>
-    <div class="alert alter-danger alert-dismissible fade show" role = "alert"> //role for accessibility purpose
+    <div class="alert alert-danger alert-dismissible fade show" role = "alert"> <%//role for accessibility purpose %>
     
         <%=error%>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
