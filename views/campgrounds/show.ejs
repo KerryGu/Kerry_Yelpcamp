@@ -1,5 +1,5 @@
 <% layout('layouts/boilerplate')%>
-
+<link rel="stylesheet" href="/stylesheets/stars.css">
 <%// 用div是因为要用boostrap 的grid system %>
 <div class="row">
 
@@ -31,7 +31,7 @@
         <form action="/campgrounds/<%=campground._id%>/reviews" method = "POST" class = "mb-3 validated-form" novalidate>
           <div class = "mb-3">
               <label class = "form-label" for="rating">Rating</label>
-              <input class = "form-range" name = "review[rating]" type="range" min = "1" max = "5" name = "" id = "">
+              <input class = "form-range" name = "review[rating]" type="range" min = "1" max = "10" name = "" id = "">
            </div>
           <div class = "mb-3">
               <label class = "form-label" for="body">Review</label>
@@ -45,7 +45,7 @@
           <button class = "btn btn-success"> Submit </button>
         
         </form> 
-        <%for (let review of campground.reivews){ %>
+        <%for (let review of campground.reviews){ %>
         <div class = "card mb-3">
         <div class = 'card-body'> 
           <h5 class="card-title">Rating: <%= review.rating%></h5>
