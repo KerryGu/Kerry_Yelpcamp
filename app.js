@@ -58,6 +58,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
+    res.locals.currentUser = req.user; // so in all template I should be able to use currentUser
     res.locals.success = req.flash('success'); // redirect 前被存到locals success attribute 的  flash message
     res.locals.error = req.flash('error');
     // set up flash attribute for every input 
