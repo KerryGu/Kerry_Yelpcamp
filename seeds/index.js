@@ -26,6 +26,7 @@ const seedDB = async () => {
         const random1000 = Math.floor(Math.random() * 1000); // get a random number from 0 to 1000
         const price = Math.floor(Math.random()* 30) + 10
         const camp = new Campground({
+            author: '671590b1914b71b6c8d1977f',
             location: `${cities[random1000].city}, ${cities[random1000].state}`, // that we have exported from cities.js or seedHelpers.js
             title: `${sample(descriptors)} ${sample(places)}`, // get a random element out of the descriptors / places array
             image:`https://picsum.photos/400?random=${Math.random()}`,
