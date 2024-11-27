@@ -4,19 +4,28 @@ const catchAsync = require('../utils/catchAsync.js');
 const Campground = require('../models/campground.js');
 const { isLoggedIn, validateCampground, isAuthor} = require('../middleware');
 const campgrounds = require('../controllers/campgrounds')
-router.get('/', catchAsync(campgrounds.index));
 
+//Another way to structure
+//router.get('/', catchAsync(campgrounds.index));
+//router.post('/', isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground))
+router.route('/')
+    .post(isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground))
+    .get(catchAsync(campgrounds.index));
+
+ 
+//put before show route, other wise new would be considered as an id
 router.get('/new', isLoggedIn, campgrounds.renderNewForm);
 
-router.post('/', isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground))
+router.route('/:id')
+    .get(catchAsync(campgrounds.showCampground))
+    .put(isLoggedIn, isAuthor, validateCampground, catchAsync(campgrounds.updateCampground))
+    //update campground
+    .delete(isLoggedIn, isAuthor, catchAsync(campgrounds.deleteCampground));
 
-router.get('/:id', catchAsync(campgrounds.showCampground));
 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(campgrounds.enderEditForm))
 
-//update campground
-router.put('/:id', isLoggedIn, isAuthor, validateCampground, catchAsync(campgrounds.updateCampground));
 
-router.delete('/:id', isLoggedIn, isAuthor, catchAsync(campgrounds.deleteCampground));
+
 
 module.exports = router;
