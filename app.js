@@ -1,3 +1,9 @@
+
+// if in production / development mode, take the variables in .env file and stroe the variables in dotenv.process (eg. process.env.SECRET)
+if (process.env.NODE_ENV != "production") { 
+    require('dotenv').config();
+}
+
 const express = require('express')
 const app = express()
 const path = require('path')
