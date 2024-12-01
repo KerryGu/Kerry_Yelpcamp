@@ -4,12 +4,17 @@ const catchAsync = require('../utils/catchAsync.js');
 const Campground = require('../models/campground.js');
 const { isLoggedIn, validateCampground, isAuthor} = require('../middleware');
 const campgrounds = require('../controllers/campgrounds')
-
+var multer = require('multer')
+var upload = multer({dest : 'uploads/'})
 //Another way to structure
 //router.get('/', catchAsync(campgrounds.index));
 //router.post('/', isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground))
 router.route('/')
     .post(isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground))
+    // upload.array('image') 上传多张图， upload.single('image) middleware 上传1张图 
+    .post(upload.single('image'), (req, res) => { 
+        res.send(req.body);
+    })
     .get(catchAsync(campgrounds.index));
 
  
