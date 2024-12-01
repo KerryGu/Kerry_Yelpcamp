@@ -1,14 +1,16 @@
 <% layout('layouts/boilerplate')%>
 <link rel="stylesheet" href="/stylesheets/stars.css">
 
-<%// 用div是因为要用boostrap 的grid system %>
+<%// 用div是因为要用boostrap 的grid system  %>
 
 
 <div class="row">
 
     <div class="col-6">
         <div class="card mb-3" >
-            <img class="card-img-top" src="<%= campground.image%>" alt="">
+            <% for(img of campground.images) {%>
+            <img class="card-img-top" src="<%= img.url%>" alt="">
+            <% } %>
             <div class="card-body">
               <h5 class="card-title"><%= campground.title%></h5>
               <p class="card-text"> <%= campground.description%></p>
