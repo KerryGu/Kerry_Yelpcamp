@@ -5,16 +5,18 @@ const Campground = require('../models/campground.js');
 const { isLoggedIn, validateCampground, isAuthor} = require('../middleware');
 const campgrounds = require('../controllers/campgrounds')
 var multer = require('multer')
-var upload = multer({dest : 'uploads/'})
+
+const { storage } = require('../cloudinary'); // not specifying files, then load the index
+const upload = multer({
+    storage: storage}) // multer tell storage to store the files in storage (cloudinary)
+
+
 //Another way to structure
 //router.get('/', catchAsync(campgrounds.index));
 //router.post('/', isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground))
 router.route('/')
-    .post(isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground))
+    .post(isLoggedIn, upload.array("campground[image]"), validateCampground, catchAsync(campgrounds.createCampground))
     // upload.array('image') 上传多张图， upload.single('image) middleware 上传1张图 
-    .post(upload.single('image'), (req, res) => { 
-        res.send(req.body);
-    })
     .get(catchAsync(campgrounds.index));
 
  
