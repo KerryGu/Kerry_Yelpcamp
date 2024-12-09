@@ -18,6 +18,7 @@ router.route('/')
     .post(isLoggedIn, upload.array("campground[image]"), validateCampground, catchAsync(campgrounds.createCampground))
     // upload.array('image') 上传多张图， upload.single('image) middleware 上传1张图 
     .get(catchAsync(campgrounds.index));
+    
 
  
 //put before show route, other wise new would be considered as an id
