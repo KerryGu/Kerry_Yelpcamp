@@ -7,10 +7,33 @@
 <div class="row">
 
     <div class="col-6">
+
+        <div id="campgroundCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <% // loop thorugh each image and make a carousal item for each %>
+                <% campground.images.forEach((img, i) => { %>
+                   <% // if image is the first one to display (i === 0), add an 'active status, otherwise add empty status %>
+              <div class="carousel-item <%= i ===0 ? 'active': '' %>" >
+                <% // needs (<  % = )to show the image in html !%>
+                <img class="d-block w-100" src="<%= img.url %>" alt="">
+              </div>
+              <% }) %>
+
+            </div>
+            <% //only show the previous and next picture button when there are more than one pictures for the campground %>
+            <% if(campground.images.length > 1) { %>
+            <a class="carousel-control-prev" href="#campgroundCarousel" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#campgroundCarousel" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          <% } %>
+        </div>
+
         <div class="card mb-3" >
-            <% for(img of campground.images) {%>
-            <img class="card-img-top" src="<%= img.url%>" alt="">
-            <% } %>
             <div class="card-body">
               <h5 class="card-title"><%= campground.title%></h5>
               <p class="card-text"> <%= campground.description%></p>

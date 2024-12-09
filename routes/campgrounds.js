@@ -18,7 +18,6 @@ router.route('/')
     .post(isLoggedIn, upload.array("campground[image]"), validateCampground, catchAsync(campgrounds.createCampground))
     // upload.array('image') 上传多张图， upload.single('image) middleware 上传1张图 
     .get(catchAsync(campgrounds.index));
-    
 
  
 //put before show route, other wise new would be considered as an id
@@ -26,12 +25,13 @@ router.get('/new', isLoggedIn, campgrounds.renderNewForm);
 
 router.route('/:id')
     .get(catchAsync(campgrounds.showCampground))
-    .put(isLoggedIn, isAuthor, validateCampground, catchAsync(campgrounds.updateCampground))
+    
+    .put(isLoggedIn, isAuthor, upload.array("campground[image]"), validateCampground, catchAsync(campgrounds.updateCampground))
     //update campground
     .delete(isLoggedIn, isAuthor, catchAsync(campgrounds.deleteCampground));
 
 
-router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(campgrounds.enderEditForm))
+router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(campgrounds.renderEditForm))
 
 
 
