@@ -29,9 +29,16 @@ const seedDB = async () => {
             author: '671590b1914b71b6c8d1977f',
             location: `${cities[random1000].city}, ${cities[random1000].state}`, // that we have exported from cities.js or seedHelpers.js
             title: `${sample(descriptors)} ${sample(places)}`, // get a random element out of the descriptors / places array
-            image:`https://picsum.photos/400?random=${Math.random()}`,
             description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam dolores vero perferendis laudantium, consequuntur voluptatibus nulla architecto, sit soluta esse iure sed labore ipsam a cum',
-            price
+            price,
+            images: [ {
+                url: 'https://res.cloudinary.com/df6sihvhh/image/upload/v1733777493/Kerry_YelpCamp/cppymhymzezijcuvvczv.jpg',
+                filename: 'Kerry_YelpCamp/cppymhymzezijcuvvczv'
+              },
+              {
+                url: 'https://res.cloudinary.com/df6sihvhh/image/upload/v1733777493/Kerry_YelpCamp/k2kpa8gswv2fazfmmjm4.jpg',
+                filename: 'Kerry_YelpCamp/k2kpa8gswv2fazfmmjm4'
+              }]
            
         })
         await camp.save();
