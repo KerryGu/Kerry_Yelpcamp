@@ -26,7 +26,8 @@ router.get('/new', isLoggedIn, campgrounds.renderNewForm);
 router.route('/:id')
     .get(catchAsync(campgrounds.showCampground))
     
-    .put(isLoggedIn, isAuthor, upload.array("campground[image]"), validateCampground, catchAsync(campgrounds.updateCampground))
+    //validateCampground : 是Joi 的schema
+    .put(isLoggedIn, isAuthor, upload.array("image"), validateCampground, catchAsync(campgrounds.updateCampground))
     //update campground
     .delete(isLoggedIn, isAuthor, catchAsync(campgrounds.deleteCampground));
 

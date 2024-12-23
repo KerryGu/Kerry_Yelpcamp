@@ -7,9 +7,15 @@ const ImageSchema = new Schema({
     filename: String
 });
 
+
+//virtual : define our own attribute for the picture schema
+ImageSchema.virtual('thumbnail').get(function(){
+    // for the url, replace the /upload with /upload/w_200
+   return this.url.replace('/upload', '/upload/w_200');
+});
+
 const CampgroundSchema = new Schema({
-    title: String, images: [{  url: String,
-        filename: String}],
+    title: String, images: [ImageSchema],
     price: String,
     description: String, location: String,
     author: {

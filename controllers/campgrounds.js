@@ -1,5 +1,5 @@
 const Campground = require('../models/campground.js');
-
+const { cloudinary } = require("../cloudinary");
 module.exports.index = async (req, res) => {
     const campgrounds = await Campground.find({});
     res.render('campgrounds/index', { campgrounds })
@@ -24,7 +24,6 @@ module.exports.createCampground = async(req, res, next) => {
 
 module.exports.showCampground = async (req, res,) => {
     // populate reviews + author for each review
-    console.log(req, req.files);
     const campground = await Campground.findById(req.params.id).populate({
 
         path: 'reviews',
@@ -48,7 +47,7 @@ module.exports.renderEditForm = async (req, res) => {
 }
 
 module.exports.updateCampground = async (req, res) => {
-    const { id } = req.params;  
+    const { id } = req.params;
     const campground = await Campground.findByIdAndUpdate(id, { ...req.body.campground});
     const imgs = req.files.map(f => ({ 
         url: f.path, filename: f.filename
@@ -58,6 +57,18 @@ module.exports.updateCampground = async (req, res) => {
     //... spread function, spread each item in the images array and push them to the list seperately 
     campground.images.push( ...imgs); 
     await campground.save();
+
+    //cloudinary storage
+    if (req.body.deleteImages) { 
+        for (let filename of req.body.deleteImages) { 
+            // delete the selected images from cloudinary through cloudinary.deestroy
+            await cloudinary.uploader.destroy(filename);
+        }
+        //pull operator : pull elements(images) out of the images array for images with fileNames is in deleteImages
+        const result = await campground.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } });
+        const updatedCampground = await Campground.findById(id);
+    }
+    
     req.flash('success', 'Successfully updated campground!');
     res.redirect(`/campgrounds/${campground._id}`)
 }
