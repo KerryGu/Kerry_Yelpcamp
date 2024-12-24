@@ -1,3 +1,5 @@
+
+//'node seeds/index.js' command to seed the database
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp'
     , { useNewUrlParser: true, useUnifiedtopology: true}
@@ -38,7 +40,8 @@ const seedDB = async () => {
               {
                 url: 'https://res.cloudinary.com/df6sihvhh/image/upload/v1733777493/Kerry_YelpCamp/k2kpa8gswv2fazfmmjm4.jpg',
                 filename: 'Kerry_YelpCamp/k2kpa8gswv2fazfmmjm4'
-              }]
+                }],
+            geometry: {type:"Point", coordinates:[-113.1331, 47.0202]}
            
         })
         await camp.save();

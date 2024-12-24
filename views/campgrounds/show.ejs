@@ -3,10 +3,11 @@
 
 <%// 用div是因为要用boostrap 的grid system  %>
 
-
 <div class="row">
 
     <div class="col-6">
+
+        <div id='map' style='width: 400px; height: 300px;'></div>
 
         <div id="campgroundCarousel" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
@@ -117,5 +118,15 @@
         <% } %>  
     </div>
 </div>
+
+<%//normal ejs structure(process.env.MAPBOX_TOKEN) doesn't work in showPageMap.js javascript file, so need to define mapToken, and the script can retrieve this token afterwards %>
+
+<script> 
+    const mapToken = '<%-process.env.MAPBOX_TOKEN%>'
+    '<%//pass in the campground for showPage.js to access for centering the map around the location%>'
+     '<%//need JSON.stringify to transform the campground into valid javascript data (string)%>'
+    const campground = '<%-JSON.stringify(campground)%>'
+ </script>
+<script src="/javascripts.showPageMap.js"></script>
 
 

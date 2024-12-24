@@ -10,7 +10,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
     cloudinary,
     params: {
-        folder: 'Kerry_YelpCamp', // mongosh database 的名字-> store the data into the designated folder ('YelpCamp)
+        folder: 'Kerry_YelpCamp', // mongosh database 的名字-> store the data into the designated folder ('Kerry_YelpCamp') in cloudinary
         allowedFormats: ['jpeg', 'png', 'jpg', 'heic']
     }
 });
