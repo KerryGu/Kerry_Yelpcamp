@@ -7,6 +7,7 @@ const ImageSchema = new Schema({
     filename: String
 });
 
+const ops = { toJSON: {virtuals:true} }
 
 //virtual : define our own attribute for the picture schema
 ImageSchema.virtual('thumbnail').get(function(){
@@ -25,7 +26,7 @@ const CampgroundSchema = new Schema({
         ref:"User"
     },
     reviews: [{ type: Schema.Types.ObjectId, ref: "Review" }]
-});
+}, opts);
 
 // middleware is trigger after Campground.findByIdAndDelete(id) is called, and
 //delete all related reviews to a campground when a campground is deleted 
@@ -42,4 +43,8 @@ CampgroundSchema.post('findOneAndDelete', async function (doc) {
 }
 )
 
+CampgroundSchema.virtual('properties.popUpMarkup').get(function(){
+    return `<string><a href="/campgrounds/${this._id}">${this.title}</a><strong>
+                <p>${this.description.substring(0,20)}...</p>`
+});
 module.exports = mongoose.model('Campground', CampgroundSchema);
