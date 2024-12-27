@@ -7,7 +7,7 @@ const ImageSchema = new Schema({
     filename: String
 });
 
-const ops = { toJSON: {virtuals:true} }
+const opts = { toJSON: {virtuals:true} }
 
 //virtual : define our own attribute for the picture schema
 ImageSchema.virtual('thumbnail').get(function(){

@@ -1,6 +1,5 @@
-
 //'node seeds/index.js' command to seed the database
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp'
     , { useNewUrlParser: true, useUnifiedtopology: true}
 )
@@ -20,6 +19,7 @@ const sample = array => array[Math.floor(Math.random() * array.length)];
 // and it returns a random element in the array : Math.random generates a random number from 0 - 1, 
 //times that number by the array length, and take the floor -> get an index within the range of the array
 
+//node seeds/index.js command to seed the database
 
 
 const seedDB = async () => {
