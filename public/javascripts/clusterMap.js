@@ -2,11 +2,14 @@
 maptilersdk.config.apiKey = maptilerApiKey;
 
 const map = new maptilersdk.Map({
-    container: 'map',
+    container: 'cluster-map',
     style: maptilersdk.MapStyle.BRIGHT,
     center: [-103.59179687498357, 40.66995747013945],
-    zoom: 3
+    zoom: 3,
+    terrainControl: true,
+    scaleControl: true,
 });
+
 
 map.on('load', function () {
     map.addSource('campgrounds', {

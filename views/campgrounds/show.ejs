@@ -7,16 +7,16 @@
 
     <div class="col-6">
 
-        <div id='map' style='width: 400px; height: 300px;'></div>
+        <div id='map' class="mb-3"></div>
 
         <div id="campgroundCarousel" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
+            <div class="carousel-inner mb-3">
                 <% // loop thorugh each image and make a carousal item for each %>
                 <% campground.images.forEach((img, i) => { %>
                    <% // if image is the first one to display (i === 0), add an 'active status, otherwise add empty status %>
               <div class="carousel-item <%= i ===0 ? 'active': '' %>" >
                 <% // needs (<  % = )to show the image in html !%>
-                <img class="d-block w-100" src="<%= img.url %>" alt="">
+                <img crossorigin="anonymous" class="d-block w-100" src="<%= img.url %>" alt="">
               </div>
               <% }) %>
 
