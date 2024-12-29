@@ -24,7 +24,6 @@ const mongoSanitize = require('express-mongo-sanitize');
 
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-
 const dbUrl = process.env.DB_URL||'mongodb://127.0.0.1:27017/yelp-camp';
 const secret = process.env.SECRET||'thisshouldbeabettersecret!';
 
@@ -158,7 +157,7 @@ app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/reviews", reviewsRoutes);
 app.use('/', usersRoutes);
 
-app.get("/home", (req, res) => { res.render('home') })
+app.get("/", (req, res) => { res.render('home') })
 
 
 app.all(/(.*)/, (req, res, next) => {
