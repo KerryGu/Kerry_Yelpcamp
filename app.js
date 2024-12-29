@@ -15,7 +15,6 @@ const User = require("./models/user")
 const campgroundRoutes = require('./routes/campgrounds.js');
 const reviewsRoutes = require("./routes/reviews.js");
 const usersRoutes = require('./routes/users.js');
-const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
@@ -23,14 +22,35 @@ const Joi = require('joi');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
 
-mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp'
-)
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+
+const dbUrl = process.env.DB_URL;
+
+mongoose.connect(dbUrl);
+// dbURL : web database to connnect to when we deploy our campground in the production mode , 这样数据就不集中在local database里了
+
+
+// mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp'
+// )
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
     console.log("Database connected");
 });
+
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret: 'thisshouldbeabettersecret!'
+    }
+});
+
+store.on("error", function (e) { 
+    console.log("SESSION STORE ERROR ", e)
+})
 
 app.engine('ejs', ejsMate)
 app.use(express.static(path.join(__dirname, 'public')));
@@ -45,6 +65,8 @@ app.use(express.urlencoded({ extended: true })); // parse the request body
 app.use(methodOverride('_method'))
 app.use(express.static('public'));
 const sessionConfig = {
+    // store object designed above -> use mongoo session to store the objects
+    store, 
     //not using default name , so harder for hackers to figure out
     name :"settion",
     secret: 'thisshouldbeabettersecret!',
