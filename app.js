@@ -25,12 +25,12 @@ const mongoSanitize = require('express-mongo-sanitize');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 
-const dbUrl = process.env.DB_URL;
-const secret = process.env.SECRET|| 'thisshouldbeabettersecret!';
+const dbUrl = process.env.DB_URL||'mongodb://127.0.0.1:27017/yelp-camp';
+const secret = process.env.SECRET||'thisshouldbeabettersecret!';
 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+
 });
 // dbURL : web database to connnect to when we deploy our campground in the production mode , 这样数据就不集中在local database里了
 
@@ -66,7 +66,7 @@ const store = MongoStore.create({
     }
 });
 
-store.on("error", function (e) { 
+store.on("error", (e) => { 
     console.log("SESSION STORE ERROR ", e)
 })
 
