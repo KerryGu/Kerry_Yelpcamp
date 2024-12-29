@@ -5,6 +5,7 @@ if (process.env.NODE_ENV != "production") {
 }
 
 const express = require('express')
+const helmet = require('helmet');
 const app = express()
 const path = require('path')
 const mongoose = require('mongoose')
@@ -20,14 +21,17 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const Joi = require('joi');
 const mongoSanitize = require('express-mongo-sanitize');
-const helmet = require('helmet');
 
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 
 const dbUrl = process.env.DB_URL;
+const secret = process.env.SECRET|| 'thisshouldbeabettersecret!';
 
-mongoose.connect(dbUrl);
+mongoose.connect(dbUrl, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 // dbURL : web database to connnect to when we deploy our campground in the production mode , 这样数据就不集中在local database里了
 
 
@@ -40,17 +44,6 @@ db.once("open", () => {
     console.log("Database connected");
 });
 
-const store = MongoStore.create({
-    mongoUrl: dbUrl,
-    touchAfter: 24 * 60 * 60,
-    crypto: {
-        secret: 'thisshouldbeabettersecret!'
-    }
-});
-
-store.on("error", function (e) { 
-    console.log("SESSION STORE ERROR ", e)
-})
 
 app.engine('ejs', ejsMate)
 app.use(express.static(path.join(__dirname, 'public')));
@@ -64,12 +57,26 @@ app.use(mongoSanitize({
 app.use(express.urlencoded({ extended: true })); // parse the request body 
 app.use(methodOverride('_method'))
 app.use(express.static('public'));
+
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+       secret
+    }
+});
+
+store.on("error", function (e) { 
+    console.log("SESSION STORE ERROR ", e)
+})
+
+//store->store the session in Mongo Atlas 
 const sessionConfig = {
     // store object designed above -> use mongoo session to store the objects
     store, 
     //not using default name , so harder for hackers to figure out
-    name :"settion",
-    secret: 'thisshouldbeabettersecret!',
+    name :'session',
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: { // specify options for cookies to send back

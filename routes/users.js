@@ -17,7 +17,7 @@ router.route('/login')
     users.userLogIn)
 
 router.route('/register')
-    .get( users.showRegisterPage)
+    .get(users.showRegisterPage)
     .post(catchAsync(users.registerUsers));
 
 router.get('/logout', users.userLogOut); 
